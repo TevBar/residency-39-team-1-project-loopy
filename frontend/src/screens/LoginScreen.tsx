@@ -1,6 +1,3 @@
-// Git test: Tevin was here
-
-
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -15,17 +12,19 @@ import { useAuth } from '../contexts/AuthContext';
 import firestore from '@react-native-firebase/firestore';
 import LottieView from 'lottie-react-native';
 
+const loginLoader = require('../../assets/lottie/login-loader.json');
+
+
+
 export default function LoginScreen() {
   const { signInWithGoogle, signInAsGuest, isLoading, error, user } = useAuth();
   const [localLoading, setLocalLoading] = useState(false);
   const [userMetadata, setUserMetadata] = useState<any>(null);
 
   const handleGoogleSignIn = async () => {
-    console.log('Login button pressed - starting Google sign-in');
     setLocalLoading(true);
     try {
       await signInWithGoogle();
-      console.log('Google sign-in completed');
     } catch (err) {
       console.error('Error in handleGoogleSignIn:', err);
       Alert.alert('Sign In Failed', 'Unable to sign in with Google. Please try again.');
@@ -35,11 +34,9 @@ export default function LoginScreen() {
   };
 
   const handleGuestSignIn = async () => {
-    console.log('Guest sign-in button pressed');
     setLocalLoading(true);
     try {
       await signInAsGuest();
-      console.log('Guest sign-in completed');
     } catch (err) {
       console.error('Error in handleGuestSignIn:', err);
       Alert.alert('Sign In Failed', 'Unable to sign in as guest. Please try again.');
@@ -48,7 +45,6 @@ export default function LoginScreen() {
     }
   };
 
-  // ✅ Firestore snapshot for user metadata (optional)
   useEffect(() => {
     if (!user || !user.uid) return;
 
@@ -59,7 +55,6 @@ export default function LoginScreen() {
         doc => {
           if (doc.exists) {
             setUserMetadata(doc.data());
-            console.log('User metadata:', doc.data());
           }
         },
         err => {
@@ -74,10 +69,11 @@ export default function LoginScreen() {
     return (
       <View style={styles.loadingContainer}>
         <LottieView
-          source={require('../../assets/login-loader.json')}
+          source={loginLoader} // ✅ No casting needed
           autoPlay
           loop
           style={{ width: 200, height: 200 }}
+          speed={0.5}
         />
         <Text style={styles.loadingText}>Loading...</Text>
       </View>
@@ -125,7 +121,7 @@ export default function LoginScreen() {
         )}
 
         <Text style={styles.disclaimer}>
-          By signing in, you agree to our Terms of Service and Privacy Policy
+          By signing in, you agree to our Terms of Service and Privacy Policy.
         </Text>
       </View>
     </SafeAreaView>
@@ -133,97 +129,36 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
+  container: { flex: 1, backgroundColor: '#f5f5f5' },
+  content: { flex: 1, justifyContent: 'center', padding: 24 },
+  header: { alignItems: 'center', marginBottom: 32 },
+  title: { fontSize: 32, fontWeight: 'bold', color: '#333' },
+  subtitle: { fontSize: 16, color: '#666', marginTop: 8 },
+  buttonContainer: { marginBottom: 24 },
+  button: {
+    paddingVertical: 14,
+    borderRadius: 8,
+    marginBottom: 16,
+    alignItems: 'center',
   },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
+  googleButton: { backgroundColor: '#4285F4' },
+  googleButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  guestButton: { backgroundColor: '#e0e0e0' },
+  guestButtonText: { color: '#333', fontSize: 16, fontWeight: '600' },
+  disabledButton: { opacity: 0.6 },
+  errorContainer: { marginTop: 12 },
+  errorText: { color: '#ff5252', textAlign: 'center', fontSize: 14 },
+  disclaimer: {
+    fontSize: 12,
+    color: '#999',
+    textAlign: 'center',
+    marginTop: 16,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: '#666',
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 60,
-  },
-  title: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#333',
-    letterSpacing: 2,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  buttonContainer: {
-    gap: 16,
-  },
-  button: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    alignItems: 'center',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    minHeight: 56,
-    justifyContent: 'center',
-  },
-  googleButton: {
-    backgroundColor: '#4285F4',
-  },
-  googleButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  guestButton: {
     backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#ddd',
   },
-  guestButtonText: {
-    color: '#333',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  disabledButton: {
-    opacity: 0.6,
-  },
-  errorContainer: {
-    marginTop: 20,
-    padding: 12,
-    backgroundColor: '#ffebee',
-    borderRadius: 4,
-  },
-  errorText: {
-    color: '#c62828',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  disclaimer: {
-    position: 'absolute',
-    bottom: 40,
-    left: 20,
-    right: 20,
-    textAlign: 'center',
-    fontSize: 12,
-    color: '#999',
-  },
+  loadingText: { marginTop: 12, fontSize: 16, color: '#666' },
 });

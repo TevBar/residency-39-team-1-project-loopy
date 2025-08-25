@@ -124,7 +124,7 @@ android {
 
     namespace 'com.loopy.app'
     defaultConfig {
-        applicationId 'loopy.productivity.app'
+        applicationId 'com.loopy.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

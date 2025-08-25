@@ -12,11 +12,11 @@ import { useAuth } from '../contexts/AuthContext';
 import firestore from '@react-native-firebase/firestore';
 import LottieView from 'lottie-react-native';
 
-// ✅ Define Task type
+const emptyTasks = require('../../assets/empty-tasks.json'); // ✅ require instead of import
+
 type Task = {
   id: string;
   title: string;
-  // Add other fields as needed
 };
 
 export default function HomeScreen() {
@@ -48,7 +48,7 @@ export default function HomeScreen() {
         }
       );
 
-    return () => unsubscribe(); // ✅ Cleanup on unmount
+    return () => unsubscribe();
   }, [user]);
 
   const fallbackFetch = async (userId: string) => {
@@ -96,10 +96,11 @@ export default function HomeScreen() {
         ) : tasks.length === 0 ? (
           <View style={styles.placeholder}>
             <LottieView
-              source={require('../../assets/empty-tasks.json')}
+              source={emptyTasks} // ✅ No casting needed
               autoPlay
               loop
               style={{ width: 200, height: 200 }}
+              speed={0.5}
             />
             <Text style={styles.placeholderText}>No tasks yet. Add one!</Text>
           </View>
@@ -120,46 +121,24 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
+  container: { flex: 1, backgroundColor: '#f5f5f5' },
   header: {
     backgroundColor: '#fff',
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginTop: 4,
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#333' },
+  subtitle: { fontSize: 16, color: '#666', marginTop: 4 },
+  content: { flex: 1, padding: 20 },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#333',
     marginBottom: 16,
   },
-  placeholder: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  placeholderText: {
-    color: '#999',
-    fontSize: 14,
-    marginTop: 12,
-  },
+  placeholder: { alignItems: 'center', justifyContent: 'center', padding: 20 },
+  placeholderText: { color: '#999', fontSize: 14, marginTop: 12 },
   errorText: {
     color: '#ff5252',
     fontSize: 14,
@@ -176,10 +155,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  taskText: {
-    fontSize: 16,
-    color: '#333',
-  },
+  taskText: { fontSize: 16, color: '#333' },
   signOutButton: {
     margin: 20,
     padding: 16,
@@ -187,9 +163,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  signOutButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  signOutButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
 });

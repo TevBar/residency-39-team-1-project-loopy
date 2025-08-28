@@ -1,9 +1,16 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from flask import Flask, jsonify
 from flask_cors import CORS
 
 from backend.crud.tasks import register_task_routes
 from backend.crud.archived import register_archived_routes
 from backend.crud.users import register_user_routes
+
+
 
 app = Flask(__name__)
 CORS(app)

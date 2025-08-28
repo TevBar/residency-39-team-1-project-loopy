@@ -25,5 +25,7 @@ serviceAccount*.json
 
 # secrets
 *.json
+!frontend/eas.json
+
 
 backend/accounts.json

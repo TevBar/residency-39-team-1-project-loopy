@@ -1,4 +1,4 @@
-package com.loopy.app
+package loopy.productivity.app
 
 import android.os.Build
 import android.os.Bundle

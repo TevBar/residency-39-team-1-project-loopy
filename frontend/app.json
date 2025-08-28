@@ -3,6 +3,7 @@
     "name": "Loopy",
     "slug": "loopy",
     "version": "1.0.0",
+    "owner": "tevbar",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,14 +19,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.loopy.app"
+      "bundleIdentifier": "loopy.productivity.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.loopy.app"
+      "package": "loopy.productivity.app"
     },
     "web": {
       "bundler": "metro",
@@ -33,8 +34,21 @@
     },
     "extra": {
       "eas": {
-        "projectId": "00000000-0000-0000-0000-000000000000"
+        "projectId": "bfa1a53c-3e9b-43ad-9aad-54e9e6a3abd2"
       }
-    }
+    },
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          }
+        }
+      ]
+    ]
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import LottieView from 'lottie-react-native';
 import { View, StyleSheet } from 'react-native';
+import confetti from '../../../assets/lottie/confetti.json';
 
 const ConfettiReward = ({ visible }: { visible: boolean }) => {
   if (!visible) return null;
@@ -8,7 +9,7 @@ const ConfettiReward = ({ visible }: { visible: boolean }) => {
   return (
     <View style={styles.overlay}>
       <LottieView
-        source={require('../../../assets/lottie/confetti.json')}
+        source={confetti}
         autoPlay
         loop={false}
         style={{ width: 300, height: 300 }}
